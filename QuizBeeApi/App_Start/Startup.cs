@@ -13,9 +13,11 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 
-namespace QuizBeeApi
+[assembly: OwinStartup(typeof(QuizBeeApi.App_Start.Startup))]
+
+namespace QuizBeeApi.App_Start
 {
-    public class StartUp
+    public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
@@ -29,7 +31,6 @@ namespace QuizBeeApi
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             app.UseWebApi(httpConfig);
-
         }
 
         private void ConfigureOAuthTokenGeneration(IAppBuilder app)
@@ -47,7 +48,7 @@ namespace QuizBeeApi
                 TokenEndpointPath = new PathString("/oauth/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = new CustomOAuthProvider(),
-                AccessTokenFormat = new CustomJwtFormat("http://localhost:59822")
+                AccessTokenFormat = new CustomJwtFormat("http://localhost:16993")
             };
             // OAuth 2.0 Bearer Access Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
@@ -57,7 +58,7 @@ namespace QuizBeeApi
         private void ConfigureOAuthTokenConsumption(IAppBuilder app)
         {
 
-            var issuer = "http://localhost:59822";
+            var issuer = "http://localhost:16993";
             string audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
             byte[] audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
 

@@ -37,9 +37,11 @@ namespace QuizBee.Infrastructure.Migrations
                 roleManager.Create(new IdentityRole { Name = "Admin" });
                 roleManager.Create(new IdentityRole { Name = "User" });
             }
-            var adminUser = manager.FindByName("SuperPowerUser");
+            var adminUser = manager.FindByName("SuperUser");
+            var superRole = roleManager.FindByName("SuperAdmin");
+            var adminRole = roleManager.FindByName("Admin");
 
-            manager.AddToRoles(adminUser.Id, new string[] { "SuperAdmin", "Admin" });
+            manager.AddToRoles(adminUser.Email, new string[] { superRole.Id, adminRole.Id });
         }
     }
 }
