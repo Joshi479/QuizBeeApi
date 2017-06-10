@@ -10,11 +10,11 @@ using Thinktecture.IdentityModel.Tokens;
 
 namespace QuizBeeApi.Providers
 {
-    public class CustomJwtFormat : ISecureDataFormat<AuthenticationTicket>
+    public class CJwtFormat : ISecureDataFormat<AuthenticationTicket>
     {
         private readonly string _issuer = string.Empty;
 
-        public CustomJwtFormat(string issuer)
+        public CJwtFormat(string issuer)
         {
             _issuer = issuer;
         }

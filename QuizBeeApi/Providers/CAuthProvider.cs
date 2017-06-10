@@ -11,7 +11,7 @@ using System.Web;
 
 namespace QuizBeeApi.Providers
 {
-    public class CustomOAuthProvider: OAuthAuthorizationServerProvider
+    public class CAuthProvider: OAuthAuthorizationServerProvider
     {
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {

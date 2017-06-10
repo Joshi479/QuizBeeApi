@@ -23,17 +23,17 @@ namespace QuizBeeApi.App_Start
         {
             HttpConfiguration httpConfig = new HttpConfiguration();
 
-            ConfigureOAuthTokenGeneration(app);
+            ConfigAuthTokenGen(app);
 
             ConfigureWebApi(httpConfig);
-            ConfigureOAuthTokenConsumption(app);
+            ConfigAuthTokenCons(app);
 
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             app.UseWebApi(httpConfig);
         }
 
-        private void ConfigureOAuthTokenGeneration(IAppBuilder app)
+        private void ConfigAuthTokenGen(IAppBuilder app)
         {
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
@@ -47,15 +47,15 @@ namespace QuizBeeApi.App_Start
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/oauth/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = new CustomOAuthProvider(),
-                AccessTokenFormat = new CustomJwtFormat("http://localhost:16993")
+                Provider = new CAuthProvider(),
+                AccessTokenFormat = new CJwtFormat("http://localhost:16993")
             };
             // OAuth 2.0 Bearer Access Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
 
         }
 
-        private void ConfigureOAuthTokenConsumption(IAppBuilder app)
+        private void ConfigAuthTokenCons(IAppBuilder app)
         {
 
             var issuer = "http://localhost:16993";
